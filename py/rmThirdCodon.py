@@ -3,10 +3,11 @@
 #Ciera Martinez
 
 ###Specifications for the program
-#1. reads in fasta file
-#2. ignores lines that start with "<"
-#3. ignores "-" this shouldn't be nessisary if you specify 
-#4. removes every third letter
+# [x] 1. reads in fasta file
+# [x] 2. ignores lines that start with "<"
+# [x] 3. ignores "-" this shouldn't be nessisary if you specify 
+# [x] 4. removes every third letter
+# [ ] 5. Now I have to write a test that checks the number of nucleotides removed per sequence.
 
 import re
 import sys	
@@ -20,11 +21,25 @@ fastaFile = open(sys.argv[1]) #file that contains fasta file
 
 fastaRead = fastaFile.read() #Makes a one item string
 
+#This matches all sequences
 match = re.findall(r"[ATCG][ATCG][ATCG]*",fastaRead)
 print match
+
+#This matches all codons
+# matchTry = re.findall(r"[ATCG][ATCG][ATCG]",fastaRead)
+# print matchTry
+
+#this re
+thirdGone = re.sub(r"([ATCG])([ATCG])[ATCG]", r"\1\2", fastaRead)
+print thirdGone
+
+#what if instead I capture just the three letters.  Ty
 
 #Simple sub to remove third codon, need to make
 #sampleReadClean = re.sub('', '', sampleRead) #removes symbols
 
 fastaFile.close()
 #data.close()
+
+
+
