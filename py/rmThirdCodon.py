@@ -5,7 +5,7 @@
 ###Specifications for the program
 #1. reads in fasta file
 #2. ignores lines that start with "<"
-#3. ignores "-" 
+#3. ignores "-" this shouldn't be nessisary if you specify 
 #4. removes every third letter
 
 import re
@@ -18,14 +18,13 @@ orig_stdout = sys.stdout
 
 fastaFile = open(sys.argv[1]) #file that contains fasta file
 
-print fastaFile.readline(100)
-
 fastaRead = fastaFile.read() #Makes a one item string
 
-print(fastaRead)
+match = re.findall(r"[ATCG][ATCG][ATCG]*",fastaRead)
+print match
 
 #Simple sub to remove third codon, need to make
-#sampleReadClean = re.sub('[^A-Za-z0-9\s]+', '', sampleRead) #removes symbols
+#sampleReadClean = re.sub('', '', sampleRead) #removes symbols
 
 fastaFile.close()
 #data.close()
