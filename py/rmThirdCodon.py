@@ -2,44 +2,43 @@
 #rmThirdCodon.py 
 #Ciera Martinez
 
-###Specifications for the program
-# [x] 1. reads in fasta file
-# [x] 2. ignores lines that start with "<"
-# [x] 3. ignores "-" this shouldn't be nessisary if you specify 
-# [x] 4. removes every third letter
-# [ ] 5. Now I have to write a test that checks the number of nucleotides removed per sequence.
+#This script inputs a fasta file alignment from transx aligner.  
+#These are for CDS sequences only!
+#It removes the third codon from all the sequences
+
+#The verifying part needs a bit of work, but you should get 1/3 of the 
+#nucleotides missing from the file that was input.
+#- How do I print to console or file?  Right now the verifying part prints to 
+#only the out put file
+# - The result is 14 nucleotides off!
+# - Write a true false test to test it. 
 
 import re
 import sys	
 
 #This sets up output file
 orig_stdout = sys.stdout
-#data = open("./data/pyOutputs/rmThirdCodonOutput", 'w')
-#sys.stdout = data
+data = open("./fasta/rmThirdCodonOutput.fasta", 'w')
+sys.stdout = data
 
 fastaFile = open(sys.argv[1]) #file that contains fasta file
 
 fastaRead = fastaFile.read() #Makes a one item string
 
-#This matches all sequences
-match = re.findall(r"[ATCG][ATCG][ATCG]*",fastaRead)
-print match
-
-#This matches all codons
-# matchTry = re.findall(r"[ATCG][ATCG][ATCG]",fastaRead)
-# print matchTry
-
-#this re
+#this removes the third codon and reasults in one item string
 thirdGone = re.sub(r"([ATCG])([ATCG])[ATCG]", r"\1\2", fastaRead)
 print thirdGone
 
-#what if instead I capture just the three letters.  Ty
+#Verify
+beforeMatchResult = re.findall(r"[ATCG][ATCG][ATCG]*",fastaRead)
+beforeResult = ''.join(beforeMatchResult)
+lengthBefore = len(beforeResult)
+print 'before %d' %(lengthBefore)
 
-#Simple sub to remove third codon, need to make
-#sampleReadClean = re.sub('', '', sampleRead) #removes symbols
+afterMatchResult = re.findall(r"[ATCG][ATCG][ATCG]*",thirdGone)
+afterResult = ''.join(afterMatchResult)
+lengthAfter = len(afterResult)
+print 'after %d' %(lengthAfter)
 
 fastaFile.close()
-#data.close()
-
-
-
+data.close()
