@@ -40,10 +40,11 @@ fastaRead = fastaFile.read()
 #Split by > 
 fastaList = fastaRead.split(">")
 
-thirdGoneList = {}
+thirdGoneList = []
 #this removes the third codon
 for sequence in fastaList:
-	thirdGoneList[sequence] = re.sub(r"([ATCG])([ATCG])[ATCG]", r"\1\2-", sequence);
+	a = re.sub(r"([ATCG])([ATCG])[ATCG]", r"\1\2-", sequence);
+	thirdGoneList.append(a)
 
 thirdGoneString = ''.join(thirdGoneList)
 print thirdGoneString
